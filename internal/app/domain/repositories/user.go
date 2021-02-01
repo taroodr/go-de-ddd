@@ -8,6 +8,7 @@ import (
 // UserRepository ユーザーリポジトリー
 type UserRepository interface {
 	Find(values.UserID) (*entities.User, error)
+	FindByEmail(values.UserEmail) (*entities.User, error)
 	FindByName(values.UserName) (*entities.User, error)
 	Save(*entities.User) error
 	Delete(*entities.User) error
