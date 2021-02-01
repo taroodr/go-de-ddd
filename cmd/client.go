@@ -1,26 +1,18 @@
 package cmd
 
 import (
-	"github.com/shimar/go-de-ddd/internal/app/domain/values"
 	"github.com/shimar/go-de-ddd/internal/app/services"
 )
 
 // Client クライアント
 type Client struct {
-	userApplicationService *services.UserApplicationService
+	userRegisterService services.UserRegisterService
 }
 
-// ChangeName 指定したidを持つユーザーの名前を変更する
-func (c *Client) ChangeName(id, name string) error {
-	user, err := c.userApplicationService.Get(id)
-	if err != nil {
-		return err
-	}
+// Register ユーザーを登録する
+func (c *Client) Register(name string) error {
+	cmd := services.NewUserRegisterCommand()
+	cmd.SetName(name)
 
-	userName, err := values.NewUserName(name)
-	if err != nil {
-		return err
-	}
-	user.ChangeName(*userName)
-	return nil
+	return c.userRegisterService.Handle(cmd)
 }
