@@ -50,3 +50,8 @@ func (c *Circle) Owner() *User {
 func (c *Circle) Members() []*User {
 	return c.members
 }
+
+// AddMember メンバーを追加する
+func (c *Circle) AddMember(u *User) {
+	c.members = append(c.members, u)
+}
