@@ -51,7 +51,15 @@ func (c *Circle) Members() []*User {
 	return c.members
 }
 
+func (c *Circle) IsFull() bool {
+	return len(c.members) >= 29
+}
+
 // AddMember メンバーを追加する
-func (c *Circle) AddMember(u *User) {
+func (c *Circle) Join(u *User) error {
+	if c.IsFull() {
+		return errors.New("このサークルは満員です")
+	}
 	c.members = append(c.members, u)
+	return nil
 }

@@ -93,13 +93,9 @@ func (s *CircleApplicationService) Join(cmd *CircleJoinCommand) error {
 	if circle == nil {
 		return errors.New("サークルが見つかりません")
 	}
-	// メンバー数を確認(オーナーを含めてMax30名)
-	if len(circle.Members()) >= 29 {
-		return errors.New("このサークルは満員です")
-	}
 
 	// メンバーを追加
-	circle.AddMember(member)
+	circle.Join(member)
 	if err := s.circleRepository.Save(circle); err != nil {
 		return err
 	}
@@ -150,7 +146,7 @@ func (s *CircleApplicationService) Invite(cmd *CircleInviteCommand) error {
 	}
 
 	// サークルの人数をチェックする
-	if len(circle.Members()) >= 29 {
+	if circle.IsFull() {
 		return errors.New("このサークルは満員です")
 	}
 
