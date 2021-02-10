@@ -2,6 +2,7 @@ package entities
 
 import (
 	"github.com/google/uuid"
+	"github.com/shimar/go-de-ddd/internal/app/domain/notifications"
 	"github.com/shimar/go-de-ddd/internal/app/domain/values"
 )
 
@@ -39,4 +40,9 @@ func (u *User) Name() values.UserName {
 // ChangeName ユーザーの名前を変更する
 func (u *User) ChangeName(name values.UserName) {
 	u.name = name
+}
+
+func (u *User) Notify(note notifications.UserNotification) {
+	note.ID(u.id)
+	note.Name(u.name)
 }
